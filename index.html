@@ -200,7 +200,25 @@
     <p>Email us at <a href="mailto:info@colmaracademy.com">info@colmaracademy.com</a></p>
     <p>&copy; 2026 Colmar Academy. All rights reserved.</p>
   </div>
+  <div class="wrap footer-meta">
+    <p class="footer-signature">More of my work on <a href="https://github.com/costa911" target="_blank" rel="noopener">GitHub</a></p>
+    <img class="visitor-badge" src="https://hits.sh/costa911.github.io/colmar-academy.svg?style=flat-square&color=fca311&label=visits" alt="Visitor count" loading="lazy">
+  </div>
 </footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite">Thanks for checking out my project!</div>
+
+<script>
+  window.addEventListener('load', function () {
+    var toast = document.getElementById('toast');
+    requestAnimationFrame(function () {
+      toast.classList.add('is-visible');
+    });
+    setTimeout(function () {
+      toast.classList.remove('is-visible');
+    }, 3500);
+  });
+</script>
 
 </body>
 </html>
