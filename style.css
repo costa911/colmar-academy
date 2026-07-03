@@ -96,6 +96,23 @@ a {
   height: 72px;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.visitor-badge {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.visitor-badge img {
+  height: 18px;
+  display: block;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -416,66 +433,149 @@ a {
 .footer-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
   flex-wrap: wrap;
-  gap: 8px;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-signature {
-  margin: 0;
+.footer-link {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
-.footer-signature a {
-  color: rgba(255, 255, 255, 0.75);
+.footer-link:hover {
   text-decoration: underline;
 }
 
-.visitor-badge {
-  height: 20px;
-  opacity: 0.8;
+/* ===== Toast ===== */
+.toast-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(12, 23, 41, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 
-/* ===== Toast ===== */
+.toast-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 .toast {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  z-index: 1001;
   background-color: var(--color-navy-dark);
   color: #fff;
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 14px 20px;
-  border-radius: 6px;
-  border-left: 3px solid var(--color-accent);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 32px 40px;
+  border-radius: 10px;
+  border-top: 3px solid var(--color-accent);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  max-width: 360px;
+  width: calc(100% - 48px);
   opacity: 0;
-  transform: translateY(12px);
+  visibility: hidden;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
 }
 
 .toast.is-visible {
   opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.toast-message {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+
+.toast-link {
+  display: inline-block;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.toast-link:hover {
+  text-decoration: underline;
+}
+
+.toast-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.toast-close:hover {
+  color: #fff;
+}
+
+/* ===== GitHub tooltip ===== */
+.gh-tooltip {
+  position: fixed;
+  z-index: 200;
+  background-color: var(--color-navy-dark);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  max-width: 240px;
+}
+
+.gh-tooltip.is-visible {
+  opacity: 1;
+  visibility: visible;
   transform: translateY(0);
+}
+
+.gh-tooltip p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.gh-tooltip a {
+  color: var(--color-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.gh-tooltip a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 700px) {
   .footer-meta {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
 
   .toast {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    padding: 28px 24px;
   }
 }
 

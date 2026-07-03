@@ -13,25 +13,34 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a href="#top" class="brand">
-      <img src="capstone_colmar_assets/images/ic-logo.svg" alt="" class="brand-logo">
-      <span class="brand-name">Colmar Academy</span>
-    </a>
+    <div class="header-left">
+      <div class="visitor-badge">
+        <img src="https://hits.sh/costa911.github.io/colmar-academy.svg?style=flat-square&color=fca311&label=visits" alt="Visitor count" loading="lazy">
+      </div>
+      <a href="#top" class="brand">
+        <img src="capstone_colmar_assets/images/ic-logo.svg" alt="" class="brand-logo">
+        <span class="brand-name">Colmar Academy</span>
+      </a>
+    </div>
 
     <nav class="site-nav" aria-label="Primary">
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#courses">Courses</a></li>
-        <li><a href="#information">Information</a></li>
+        <li><a href="#information" class="js-gh-tooltip">Information</a></li>
       </ul>
     </nav>
 
-    <a href="#" class="login-link">
+    <a href="#" class="login-link js-gh-tooltip">
       <img src="capstone_colmar_assets/images/ic-login.svg" alt="" class="login-icon">
       <span>Log In</span>
     </a>
   </div>
 </header>
+
+<div id="gh-tooltip" class="gh-tooltip" role="tooltip">
+  <p>See more of my projects on <a href="https://github.com/costa911" target="_blank" rel="noopener">GitHub</a></p>
+</div>
 
 <main>
 
@@ -201,23 +210,81 @@
     <p>&copy; 2026 Colmar Academy. All rights reserved.</p>
   </div>
   <div class="wrap footer-meta">
-    <p class="footer-signature">More of my work on <a href="https://github.com/costa911" target="_blank" rel="noopener">GitHub</a></p>
-    <img class="visitor-badge" src="https://hits.sh/costa911.github.io/colmar-academy.svg?style=flat-square&color=fca311&label=visits" alt="Visitor count" loading="lazy">
+    <a href="https://github.com/costa911" target="_blank" rel="noopener" class="footer-link">More Projects &rarr; GitHub</a>
+    <a href="https://costa911.github.io/costa911/" target="_blank" rel="noopener" class="footer-link">My GitHub Profile Page</a>
   </div>
 </footer>
 
-<div id="toast" class="toast" role="status" aria-live="polite">Thanks for checking out my project!</div>
+<div id="toast-overlay" class="toast-overlay"></div>
+<div id="toast" class="toast" role="dialog" aria-live="polite" aria-label="Welcome message">
+  <button type="button" class="toast-close" aria-label="Dismiss">&times;</button>
+  <p class="toast-message">Thanks for checking out my project!</p>
+  <a href="https://github.com/costa911" target="_blank" rel="noopener" class="toast-link">Check out more of my work &rarr; github.com/costa911</a>
+</div>
 
 <script>
-  window.addEventListener('load', function () {
+  (function () {
     var toast = document.getElementById('toast');
-    requestAnimationFrame(function () {
-      toast.classList.add('is-visible');
-    });
-    setTimeout(function () {
+    var overlay = document.getElementById('toast-overlay');
+    var closeBtn = toast.querySelector('.toast-close');
+    var dismissTimer;
+
+    function showToast() {
+      requestAnimationFrame(function () {
+        toast.classList.add('is-visible');
+        overlay.classList.add('is-visible');
+      });
+      dismissTimer = setTimeout(hideToast, 5000);
+    }
+
+    function hideToast() {
       toast.classList.remove('is-visible');
-    }, 3500);
-  });
+      overlay.classList.remove('is-visible');
+      clearTimeout(dismissTimer);
+    }
+
+    window.addEventListener('load', showToast);
+    closeBtn.addEventListener('click', hideToast);
+    overlay.addEventListener('click', hideToast);
+  })();
+
+  (function () {
+    var tooltip = document.getElementById('gh-tooltip');
+    var triggers = document.querySelectorAll('.js-gh-tooltip');
+    var hideTimer;
+
+    function positionTooltip(target) {
+      var rect = target.getBoundingClientRect();
+      tooltip.style.top = (rect.bottom + 10) + 'px';
+      tooltip.style.left = Math.max(12, rect.left) + 'px';
+    }
+
+    function showTooltip(target) {
+      positionTooltip(target);
+      tooltip.classList.add('is-visible');
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(hideTooltip, 4000);
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove('is-visible');
+    }
+
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function (event) {
+        if (trigger.getAttribute('href') === '#') {
+          event.preventDefault();
+        }
+        showTooltip(trigger);
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!tooltip.contains(event.target) && !event.target.closest('.js-gh-tooltip')) {
+        hideTooltip();
+      }
+    });
+  })();
 </script>
 
 </body>
